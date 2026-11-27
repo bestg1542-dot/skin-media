@@ -4,10 +4,12 @@
   if (!/^ecudemo\d+\.cafe24\.com$/.test(location.hostname) && location.protocol !== 'file:') return;
   var q = location.search;
   if (/[?&]pawlo=|[?&]lr=/.test(q)) return;
+  // inside a frame whose parent is another site (the Design Center preview)
   var inDC = false;
-  try { inDC = window.top !== window.self && (/d\.cafe24\.com/.test(document.referrer) || (location.ancestorOrigins && /d\.cafe24\.com/.test(location.ancestorOrigins[0] || ''))); } catch (e) {}
+  if (window.top !== window.self) { try { inDC = !window.top.location.href; } catch (e) { inDC = true; } }
   if (!inDC && !/[?&]hftour=1/.test(q)) return;
-  try { if (sessionStorage.getItem('hf_tour_seen') && !/[?&]hftour=1/.test(q)) return; } catch (e) {}
+  // main page only, every time it opens in the preview
+  if (!/^\/(m\/?)?(index\.html)?$/.test(location.pathname) && !/[?&]hftour=1/.test(q)) return;
 
   var cfg = {
     name: s.getAttribute('data-name') || '',
