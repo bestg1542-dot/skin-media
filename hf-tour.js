@@ -15,14 +15,15 @@
     color: s.getAttribute('data-color') || '#222',
     demo: s.getAttribute('data-demo') || '/?pawlo=demo',
     guide: s.getAttribute('data-guide') || '',
+    poster: s.getAttribute('data-poster') || '',
     marks: (s.getAttribute('data-marks') || '0,10,19,28,34').split(',').map(Number)
   };
   var steps = ['글자는 눌러서 바로 고쳐요', '사진은 눌러서 바꿔요', '색과 글꼴을 한 번에 바꿔요', '메인 영역 순서를 바꿔요', '휴대폰 화면도 바로 봐요'];
 
   var css = '' +
-    '#hft{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(18,18,20,.62);font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;word-break:keep-all;opacity:0;transition:opacity .35s}' +
+    '#hft{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(18,18,20,.62);font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;word-break:keep-all;opacity:0;transition:opacity .35s}' +
     '#hft.on{opacity:1}' +
-    '#hft .b{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 300px;width:100%;max-width:1200px;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.08)}' +
+    '#hft .b{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 290px;width:100%;max-width:1320px;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.08)}' +
     '#hft .v{background:#efedeb;line-height:0;display:flex;align-items:center;min-width:0}#hft video{width:100%;height:auto;display:block}' +
     '#hft .r{display:flex;flex-direction:column;padding:30px 28px 24px;border-left:1px solid #ececec}' +
     '#hft .k{margin:0;font-size:13px;color:#777}#hft .k b{color:#111;font-weight:700}' +
@@ -49,7 +50,7 @@
     w.style.setProperty('--hfc', cfg.color);
     var li = ''; for (var i = 0; i < steps.length; i++) li += '<li tabindex="0" data-i="' + i + '"><i>' + (i + 1) + '</i>' + steps[i] + '<u></u></li>';
     w.innerHTML = '<div class="b"><button type="button" class="x" aria-label="닫기">×</button>' +
-      '<div class="v"><video muted playsinline autoplay loop preload="auto" src="' + cfg.video + '"></video></div>' +
+      '<div class="v"><video muted playsinline autoplay loop preload="auto"' + (cfg.poster ? ' poster="' + cfg.poster + '"' : '') + ' src="' + cfg.video + '"></video></div>' +
       '<div class="r"><p class="k"><b>' + cfg.name + '</b> 편집툴 포함</p><h2>코딩 없이, 화면을 눌러서 직접 고쳐요</h2><ol>' + li + '</ol>' +
       '<div class="a"><a class="p" href="' + cfg.demo + '">편집툴 직접 써 보기</a>' + (cfg.guide ? '<a class="g" href="' + cfg.guide + '">사용설명서 보기</a>' : '') + '<a class="g" href="#" data-close>스킨 화면 먼저 볼게요</a></div></div></div>';
     document.body.appendChild(w);
@@ -78,6 +79,6 @@
     requestAnimationFrame(tick);
     requestAnimationFrame(function () { w.classList.add('on'); w.tabIndex = -1; w.style.outline = 'none'; w.focus({ preventScroll: true }); });
   }
-  function start() { setTimeout(build, 900); }
+  function start() { setTimeout(build, 300); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
